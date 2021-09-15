@@ -15,7 +15,8 @@ class PysparkAnon:
         self.functions_map = {"drop_column": self.anon_drop_column,
                               "replace": self.anon_replace,
                               "replace_with_regex": self.anon_replace_with_regex,
-                              "sha256": self.anon_sha256}
+                              "sha256": self.anon_sha256,
+                              "filter_row": self.anon_filter_row}
 
     def anon_drop_column(self, column_name):
         self.spark_instance = self.spark_instance.drop(column_name)
@@ -31,6 +32,9 @@ class PysparkAnon:
     def anon_sha256(self, column_name):
         self.spark_instance = self.spark_instance.withColumn(
             column_name, self.spark_functions.sha2(self.spark_instance[column_name], 256))
+
+    def anon_filter_row(self, where):
+        self.spark_instance = self.spark_instance.where(where)
 
     def parse(self):
         # add all anons into spark instance
