@@ -144,6 +144,13 @@ df.limit(5).toPandas()
 
 ### After Masking
 
+In this example we will add the following data anonymizers:
+
+- drop_column on column "marketplace"
+- replace all values to "*" of the "customer_id" column
+- replace_with_regex "R\d" (R and any digit) to "*" on "review_id" column
+- sha256 on "product_id" column
+- filter_row with condition "product_parent != 738692522"
 
 ```python
 from pyspark.sql import SparkSession
@@ -303,3 +310,11 @@ df_parsed.limit(5).toPandas()
   </tbody>
 </table>
 </div>
+
+## Currently supported data masking/anonymization methods
+- Methods
+  - drop_column - Drop a column.
+  - replace - Replace all column to a string.
+  - replace_with_regex - Replace column contents with regex.
+  - sha256 - Apply sha256 hashing function.
+  - filter_row - Apply a filter to the dataframe.
