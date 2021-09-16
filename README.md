@@ -145,11 +145,11 @@ df.limit(5).toPandas()
 
 In this example we will add the following data anonymizers:
 
-- drop_column on column "marketplace"
-- replace all values to "*" of the "customer_id" column
-- replace_with_regex "R\d" (R and any digit) to "*" on "review_id" column
-- sha256 on "product_id" column
-- filter_row with condition "product_parent != 738692522"
+- **drop_column** on column "marketplace"
+- **replace** all values to "*" of the "customer_id" column
+- **replace_with_regex** "R\d" (R and any digit) to "*" on "review_id" column
+- **sha256** on "product_id" column
+- **filter_row** with condition "product_parent != 738692522"
 
 ```python
 from pyspark.sql import SparkSession
