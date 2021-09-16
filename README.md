@@ -1,5 +1,5 @@
 # pyspark-anonymizer
-Python library which makes it possible to dynamically mask data using JSON string or map rules in a PySpark environment.
+Python library which makes it possible to dynamically mask/anonymize data using JSON string or python dict rules in a PySpark environment.
 
 ## Installing
 
