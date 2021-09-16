@@ -6,14 +6,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='pyspark-anonymizer',
     packages=['pyspark_anonymizer'],
-    version='0.2',
+    version='0.3',
     license='apache-2.0',
     description='Python library which makes it possible to dynamically mask/anonymize data using JSON string or python dict rules in a PySpark environment.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='wesleywilian',
     url='https://github.com/wesleywilian/pyspark-anonymizer',
-    download_url='https://github.com/wesleywilian/pyspark-anonymizer/archive/v0.2.tar.gz',
+    download_url='https://github.com/wesleywilian/pyspark-anonymizer/archive/v0.3.tar.gz',
     keywords=['data anonymizer', 'anon', 'spark', 'data mask', 'mask', 'data masking', 'masking'],
     classifiers=[
         'Development Status :: 3 - Alpha',
