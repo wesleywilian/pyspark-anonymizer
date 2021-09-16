@@ -1,10 +1,10 @@
-# pyspark-anon
+# pyspark-anonymizer
 Python library which makes it possible to dynamically mask data using JSON string or map rules in a PySpark environment.
 
 ## Installing
 
 ```shell
-pip install PySparkAnon
+pip install pyspark-anonymizer
 ```
 
 ## Usage
@@ -20,7 +20,6 @@ import pyspark.sql.functions as spark_functions
 spark = SparkSession.builder.appName("your_app_name").getOrCreate()
 df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
 df.limit(5).toPandas()
-
 ```
 
 <div>
@@ -155,6 +154,7 @@ In this example we will add the following data anonymizers:
 ```python
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as spark_functions
+import pyspark_anonymizer
 
 spark = SparkSession.builder.appName("your_app_name").getOrCreate()
 df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
@@ -195,9 +195,8 @@ all_anons = [
     }
 ]
 
-df_parsed = PysparkAnon(df, all_anons, spark_functions).parse()
+df_parsed = pyspark_anonymizer.Parser(df, all_anons, spark_functions).parse()
 df_parsed.limit(5).toPandas()
-
 ```
 
 <div>
