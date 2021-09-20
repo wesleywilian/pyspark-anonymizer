@@ -158,7 +158,7 @@ import pyspark_anonymizer
 spark = SparkSession.builder.appName("your_app_name").getOrCreate()
 df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
 
-all_anons = [
+dataframe_anonymizers = [
     {
         "method": "drop_column",
         "parameters": {
@@ -194,7 +194,7 @@ all_anons = [
     }
 ]
 
-df_parsed = pyspark_anonymizer.Parser(df, all_anons, spark_functions).parse()
+df_parsed = pyspark_anonymizer.Parser(df, dataframe_anonymizers, spark_functions).parse()
 df_parsed.limit(5).toPandas()
 ```
 
