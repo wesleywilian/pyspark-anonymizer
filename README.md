@@ -15,7 +15,6 @@ pip install pyspark-anonymizer
 
 ```python
 from pyspark.sql import SparkSession
-import pyspark.sql.functions as spark_functions
 
 spark = SparkSession.builder.appName("your_app_name").getOrCreate()
 df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
@@ -159,7 +158,7 @@ import pyspark_anonymizer
 spark = SparkSession.builder.appName("your_app_name").getOrCreate()
 df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
 
-all_anons = [
+dataframe_anonymizers = [
     {
         "method": "drop_column",
         "parameters": {
@@ -195,7 +194,7 @@ all_anons = [
     }
 ]
 
-df_parsed = pyspark_anonymizer.Parser(df, all_anons, spark_functions).parse()
+df_parsed = pyspark_anonymizer.Parser(df, dataframe_anonymizers, spark_functions).parse()
 df_parsed.limit(5).toPandas()
 ```
 
@@ -309,6 +308,54 @@ df_parsed.limit(5).toPandas()
   </tbody>
 </table>
 </div>
+
+### Anonymizers from DynamoDB
+
+You can store anonymizers on DynamoDB too.
+
+#### Creating DynamoDB table
+
+To create the table follow the steps below.
+
+Using example script
+- Run [examples/create_on_demand_table.py](examples/create_on_demand_table.py) script of examples directory. The table will be created
+
+On AWS console:
+- DynamoDB > Tables > Create table
+- Table name: "pyspark_anonymizer" (or any other of your own)
+- Partition key: "dataframe_name"
+- Customize the settings if you want
+- Create table
+
+#### Writing Anonymizer on DynamoDB
+
+You can run the example script, then edit your settings from there.
+
+- Run [examples/insert_anonymizer.py](examples/insert_anonymizer.py) script.
+- A new entry on DynamoDB will be added, the example dataframe name is "table_x"
+
+#### Parse from DynamoDB
+
+```python
+from pyspark.sql import SparkSession
+import pyspark.sql.functions as spark_functions
+import pyspark_anonymizer
+import boto3
+from botocore.exceptions import ClientError as client_error
+
+dynamo_table = "pyspark_anonymizer"
+dataframe_name = "table_x"
+
+dynamo_table = boto3.resource('dynamodb').Table(dynamo_table)
+spark = SparkSession.builder.appName("your_app_name").getOrCreate()
+df = spark.read.parquet("s3://amazon-reviews-pds/parquet/product_category=Electronics/")
+
+df_parsed = pyspark_anonymizer.ParserFromDynamoDB(df, dataframe_name, dynamo_table, spark_functions, client_error).parse()
+
+df_parsed.limit(5).toPandas()
+```
+
+**The output will be same as the previous. The difference is that the anonymization settings will be in DynamoDB**
 
 ## Currently supported data masking/anonymization methods
 - Methods
