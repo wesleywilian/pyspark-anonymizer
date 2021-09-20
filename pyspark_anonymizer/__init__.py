@@ -1,1 +1,2 @@
-from pyspark_anonymizer.Parser import PysparkAnon as Parser
+from pyspark_anonymizer.Parser import Parser as Parser
+from pyspark_anonymizer.ParserFromDynamoDB import ParserFromDynamoDB as ParserFromDynamoDB

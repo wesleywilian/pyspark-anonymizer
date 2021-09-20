@@ -1,7 +1,7 @@
 import json
 
 
-class PysparkAnon:
+class Parser:
     functions_map = None
     user_defined_anon = None
     spark_instance = None
