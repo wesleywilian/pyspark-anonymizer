@@ -31,7 +31,7 @@ class Parser:
 
     def anon_sha256(self, column_name):
         self.spark_instance = self.spark_instance.withColumn(
-            column_name, self.spark_functions.sha2(self.spark_instance[column_name], 256))
+            column_name, self.spark_functions.sha2(self.spark_instance[column_name].cast('String'), 256))
 
     def anon_filter_row(self, where):
         self.spark_instance = self.spark_instance.where(where)
