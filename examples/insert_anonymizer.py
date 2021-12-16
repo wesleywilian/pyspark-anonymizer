@@ -54,4 +54,4 @@ if __name__ == '__main__':
     ]
     result = put_anonymizer(anonymizers)
     print("Put succeeded:")
-    pprint(result, sort_dicts=False)
+    pprint(result)
